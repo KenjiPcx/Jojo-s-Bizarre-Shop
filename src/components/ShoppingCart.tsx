@@ -10,10 +10,12 @@ import { Separator } from '@/components/ui/separator';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { ShoppingCart as CartIcon, Plus, Minus, Trash2 } from 'lucide-react';
 import { CheckoutFlow } from './CheckoutFlow';
+import { playMudaMudaMuda } from '@/lib/audio';
+import { playKonoDioDa } from '@/lib/audio';
 
 export function ShoppingCart() {
   const { cart, updateQuantity, removeFromCart, clearCart, getItemCount } = useCart();
-  const { playMudaMudaMuda, playKonoDioDa, triggerRandomMemeSound } = useJojoAudio();
+  const { triggerRandomMemeSound } = useJojoAudio();
   const [isOpen, setIsOpen] = useState(false);
   const [dioMode, setDioMode] = useState(false);
   const [currentDioQuote, setCurrentDioQuote] = useState('');

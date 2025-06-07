@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { playKonoDioDa, playWryyy, playMenacing, playRandomJojoCatchphrase, triggerAudioBrainrot, playTimeStop, playOra, playMudaMudaMuda, playToBeContinued } from '@/lib/audio';
+import { playKonoDioDa, playWryyy, playMenacing, playRandomJojoCatchphrase, triggerAudioBrainrot, playTimeStop, playOra, playMudaMudaMuda, playToBeContinued, playKiraTheme, playPillarmenTheme, playOhNoJoseph, playJosephOhMyGod } from '@/lib/audio';
 import { dioQuotes, standEncounters } from '@/data/products';
 
 export function useBrainrotEffects() {
@@ -82,19 +82,25 @@ export function useBrainrotEffects() {
         setStandBattle(true);
         
         // Epic stand battle audio sequence
-        playMenacing();
         setTimeout(() => {
           playTimeStop();
         }, 1500);
         setTimeout(() => {
-          playOra();
+          const rand = Math.random();
+          if (rand < 0.5) {
+            playOhNoJoseph();
+          } else {
+            playJosephOhMyGod();
+          }
         }, 3000);
         setTimeout(() => {
-          playMudaMudaMuda();
+          const rand = Math.random();
+          if (rand < 0.5) {
+            playKiraTheme();
+          } else {
+            playPillarmenTheme();
+          }
         }, 4000);
-        setTimeout(() => {
-          playRandomJojoCatchphrase();
-        }, 5000);
         
         // Full brainrot mode for intense battles
         if (Math.random() < 0.4) {

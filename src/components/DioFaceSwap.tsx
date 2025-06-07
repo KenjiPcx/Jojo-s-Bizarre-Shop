@@ -1,7 +1,7 @@
 'use client';
 
+import { playKonoDioDa } from '@/lib/audio';
 import { useState, useEffect, useRef } from 'react';
-import { playJojoSound } from '@/lib/audio';
 
 export function useDioFaceSwap() {
   const [isDioSwapped, setIsDioSwapped] = useState(false);
@@ -23,7 +23,7 @@ export function useDioFaceSwap() {
 
   const triggerDioSwap = () => {
     setIsDioSwapped(true);
-    playJojoSound('konodioda');
+    playKonoDioDa();
     
     console.log('😈 KONO DIO DA! Product images hijacked!');
     

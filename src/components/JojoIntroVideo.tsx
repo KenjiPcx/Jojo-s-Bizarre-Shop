@@ -183,7 +183,7 @@ export function useJojoIntro() {
     // Show intro if never seen OR if it's been more than a day
     const shouldShowIntro = !hasSeenIntro || (lastSeenTime && parseInt(lastSeenTime) < oneDayAgo);
     
-    setShowIntro(shouldShowIntro);
+    setShowIntro(shouldShowIntro as boolean);
     setIsLoading(false);
     
     console.log('🎬 Intro check:', { hasSeenIntro, lastSeenTime, shouldShowIntro });

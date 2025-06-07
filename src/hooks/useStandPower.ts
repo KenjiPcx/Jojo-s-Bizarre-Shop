@@ -1,7 +1,8 @@
 'use client';
 
+import { playArrivederci, playGiornoDream, playGiornoTheme, playMudaMudaMuda, playShiza, playYareYareDaze } from '@/lib/audio';
+import { playOra } from '@/lib/audio';
 import { useState, useCallback, useEffect } from 'react';
-import { playJojoSound, playDramaticStinger } from '@/lib/audio';
 
 interface StandPower {
   level: number;
@@ -34,7 +35,7 @@ export function useStandPower() {
 
   // Calculate current stand based on experience
   useEffect(() => {
-    const newStand = STAND_POWERS.find(stand => 
+    const newStand = STAND_POWERS.find(stand =>
       experience >= stand.experience && experience < stand.experienceToNext
     ) || STAND_POWERS[STAND_POWERS.length - 1];
 
@@ -42,13 +43,13 @@ export function useStandPower() {
       // Level up!
       setCurrentStand(newStand);
       setShowLevelUp(true);
-      
+
       // Play level up sound
-      playDramaticStinger();
+      playOra();
       setTimeout(() => {
-        playJojoSound('giorno');
+        playGiornoDream();
       }, 500);
-      
+
       // Hide level up notification after 3 seconds
       setTimeout(() => {
         setShowLevelUp(false);
@@ -61,7 +62,7 @@ export function useStandPower() {
   const gainPower = useCallback((amount: number = 1, reason?: string) => {
     const newExperience = experience + amount;
     setExperience(newExperience);
-    
+
     // Show power gain effect
     setPowerGainAmount(amount);
     setShowPowerGain(true);
@@ -69,22 +70,22 @@ export function useStandPower() {
 
     // Play sound based on amount gained
     if (amount >= 5) {
-      playJojoSound('ora');
+      playOra();
     } else if (amount >= 3) {
-      playJojoSound('muda');
+      playShiza();
     } else {
-      playJojoSound('click-effect');
+      playYareYareDaze();
     }
   }, [experience]);
 
   const getProgressPercent = useCallback(() => {
     if (currentStand.level === 10) return 100;
-    
+
     const currentLevelExp = currentStand.experience;
     const nextLevelExp = currentStand.experienceToNext;
     const progressInLevel = experience - currentLevelExp;
     const levelRange = nextLevelExp - currentLevelExp;
-    
+
     return Math.min(100, (progressInLevel / levelRange) * 100);
   }, [experience, currentStand]);
 

@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { playJojoSound } from '@/lib/audio';
 
 interface ChaoticMenacingProps {
   isActive?: boolean;

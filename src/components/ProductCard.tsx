@@ -7,9 +7,9 @@ import { useBrainrotEffects } from '@/hooks/useBrainrotEffects';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { playJojoSound } from '@/lib/audio';
 import { useToBeContinued } from '@/components/ToBeContinued';
 import { useDioFaceSwap, DioFaceSwap } from '@/components/DioFaceSwap';
+import { playOra } from '@/lib/audio';
 
 interface ProductCardProps {
   product: Product;
@@ -47,7 +47,7 @@ export function ProductCard({ product }: ProductCardProps) {
             // Random chance for dramatic zoom when card comes into view
             if (Math.random() < 0.3) {
               setDramaticZoom(true);
-              playJojoSound('ora');
+              playOra();
               setTimeout(() => setDramaticZoom(false), 1000);
             }
           }
@@ -91,7 +91,7 @@ export function ProductCard({ product }: ProductCardProps) {
   }, [product.price, dioMode, priceRejectMode]);
 
   const handleAddToCart = () => {
-    playJojoSound('ora');
+    playOra();
     addToCart(product);
     triggerOnAddToCart(); // 20% chance to trigger "To Be Continued"
   };

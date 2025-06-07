@@ -1,13 +1,5 @@
 'use client';
 
-interface AudioConfig {
-  [key: string]: {
-    url: string;
-    volume: number;
-    duration?: number;
-  };
-}
-
 // Categorized JoJo sound files for intelligent audio management
 interface AudioConfig {
   [key: string]: {
@@ -723,7 +715,7 @@ export const triggerAudioBrainrot = async () => {
   playPillarmenTheme();
 
   // Play catchphrases in sequence (respects chaos mode cooldowns)
-  const chaos = ['muda-muda-muda', 'dio-wryyy', 'joseph-oh-my-god', 'yare-yare-daze'];
+  const chaos = ['muda-muda-muda', 'dio-wryyy', 'joseph-oh-my-god', 'yare-yare-daze', 'oh-no-joseph'];
   chaos.forEach((sound, index) => {
     setTimeout(() => audioManager.playCatchphrase(sound), index * 1500);
   });

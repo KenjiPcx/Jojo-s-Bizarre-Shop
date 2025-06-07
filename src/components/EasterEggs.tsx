@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useAchievements } from '@/hooks/useAchievements';
 import { useJojoAudio } from '@/hooks/useJojoAudio';
 import { Button } from '@/components/ui/button';
+import { playArrivederci, playJoestarRun, playOhNoJoseph, playPillarmenTheme, playReroRero, playShiza, playToBeContinued, playYareYareDaze, playZaWarudoHeaven } from '@/lib/audio';
 
 interface EasterEgg {
   id: string;
@@ -52,7 +53,6 @@ const easterEggs: EasterEgg[] = [
 
 export function EasterEggs() {
   const { unlockAchievement } = useAchievements();
-  const { playAudio } = useJojoAudio();
   const [konamiSequence, setKonamiSequence] = useState<string[]>([]);
   const [clickCounts, setClickCounts] = useState<{ [key: string]: number }>({});
   const hoverTimeouts = useRef<{ [key: string]: NodeJS.Timeout }>({});
@@ -64,15 +64,15 @@ export function EasterEggs() {
 
       const joestartRun = easterEggs.find(egg => egg.id === 'joestar-run');
       if (joestartRun && Array.isArray(joestartRun.trigger)) {
-        const triggerSequence = joestartRun.trigger.map(key => 
+        const triggerSequence = joestartRun.trigger.map(key =>
           key.replace('Arrow', 'Arrow')
         );
-        
+
         if (newSequence.length === triggerSequence.length &&
-            newSequence.every((key, index) => key === triggerSequence[index])) {
+          newSequence.every((key, index) => key === triggerSequence[index])) {
           unlockAchievement(joestartRun.achievementId);
           if (joestartRun.audioClip) {
-            playAudio(joestartRun.audioClip);
+            playJoestarRun();
           }
           setKonamiSequence([]);
         }
@@ -81,24 +81,24 @@ export function EasterEggs() {
 
     const handleClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      
+
       easterEggs.forEach(egg => {
         if (egg.type === 'click' && target.matches(egg.element)) {
           if (typeof egg.trigger === 'string') {
             if (egg.trigger === 'click') {
               unlockAchievement(egg.achievementId);
               if (egg.audioClip) {
-                playAudio(egg.audioClip);
+                playArrivederci();
               }
             } else if (egg.trigger.startsWith('click:')) {
               const requiredClicks = parseInt(egg.trigger.split(':')[1]);
               const currentCount = (clickCounts[egg.id] || 0) + 1;
               setClickCounts(prev => ({ ...prev, [egg.id]: currentCount }));
-              
+
               if (currentCount >= requiredClicks) {
                 unlockAchievement(egg.achievementId);
                 if (egg.audioClip) {
-                  playAudio(egg.audioClip);
+                  playReroRero();
                 }
                 setClickCounts(prev => ({ ...prev, [egg.id]: 0 }));
               }
@@ -110,16 +110,16 @@ export function EasterEggs() {
 
     const handleMouseEnter = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      
+
       easterEggs.forEach(egg => {
         if (egg.type === 'hover' && target.matches(egg.element)) {
           if (typeof egg.trigger === 'string' && egg.trigger.startsWith('hover:')) {
             const hoverDuration = parseInt(egg.trigger.split(':')[1]) * 1000;
-            
+
             hoverTimeouts.current[egg.id] = setTimeout(() => {
               unlockAchievement(egg.achievementId);
               if (egg.audioClip) {
-                playAudio(egg.audioClip);
+                playShiza();
               }
             }, hoverDuration);
           }
@@ -129,7 +129,7 @@ export function EasterEggs() {
 
     const handleMouseLeave = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      
+
       easterEggs.forEach(egg => {
         if (egg.type === 'hover' && target.matches(egg.element)) {
           if (hoverTimeouts.current[egg.id]) {
@@ -150,17 +150,16 @@ export function EasterEggs() {
       document.removeEventListener('click', handleClick);
       document.removeEventListener('mouseenter', handleMouseEnter, true);
       document.removeEventListener('mouseleave', handleMouseLeave, true);
-      
+
       Object.values(hoverTimeouts.current).forEach(timeout => clearTimeout(timeout));
     };
-  }, [konamiSequence, clickCounts, unlockAchievement, playAudio]);
+  }, [konamiSequence, clickCounts, unlockAchievement]);
 
   return null;
 }
 
 export function SecretJojoButton() {
   const { unlockAchievement } = useAchievements();
-  const { playAudio } = useJojoAudio();
   const [clicks, setClicks] = useState(0);
 
   const handleSecretClick = () => {
@@ -168,13 +167,13 @@ export function SecretJojoButton() {
     setClicks(newClicks);
 
     if (newClicks === 1) {
-      playAudio('oh-no-joseph');
+      playOhNoJoseph();
       unlockAchievement('first-discovery');
     } else if (newClicks === 5) {
-      playAudio('yare-yare-daze');
+      playYareYareDaze();
       unlockAchievement('persistent-explorer');
     } else if (newClicks === 10) {
-      playAudio('za-warudo-over-heaven');
+      playZaWarudoHeaven();
       unlockAchievement('heaven-ascended');
     }
   };
@@ -193,21 +192,20 @@ export function SecretJojoButton() {
 
 export function HiddenMenacingText() {
   const { unlockAchievement } = useAchievements();
-  const { playAudio } = useJojoAudio();
   const [revealed, setRevealed] = useState(false);
 
   const handleReveal = () => {
     if (!revealed) {
       setRevealed(true);
       unlockAchievement('menacing-discoverer');
-      playAudio('pillarmen-theme');
+      playPillarmenTheme();
     }
   };
 
   return (
-    <div 
-      className="fixed top-1/2 left-4 transform -translate-y-1/2 cursor-pointer select-none"
-      style={{ 
+    <div
+      className="fixed top-1/2 left-4 transform -translate-y-1/2 cursor-pointer select-none hidden-menacing"
+      style={{
         writingMode: 'vertical-rl',
         textOrientation: 'mixed',
         color: revealed ? '#ff6b35' : 'transparent',
@@ -232,7 +230,6 @@ export function HiddenMenacingText() {
           }
         }
       }}
-      className="hidden-menacing"
     >
       ゴゴゴゴゴ
     </div>
@@ -241,23 +238,22 @@ export function HiddenMenacingText() {
 
 export function KonoMemeReference() {
   const { unlockAchievement } = useAchievements();
-  const { playAudio } = useJojoAudio();
   const [activated, setActivated] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-      
+
       if (scrollPercent > 90 && !activated) {
         setActivated(true);
         unlockAchievement('scroll-master');
-        playAudio('to-be-continued');
+        playToBeContinued();
       }
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [activated, unlockAchievement, playAudio]);
+  }, [activated, unlockAchievement]);
 
   if (!activated) return null;
 
