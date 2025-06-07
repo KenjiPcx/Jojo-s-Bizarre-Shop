@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { playWryyyScream } from '@/lib/audio';
+import { playWryyy } from '@/lib/audio';
 
 // Fake activity feed component
 function FakeActivityFeed({ level }: { level: number }) {
@@ -109,14 +109,14 @@ export function DesperationUI({
       setModalShakeCount(prev => prev + 1);
       setTimeout(() => setModalShakeCount(0), 1000);
       // Play WRRYYYY scream when user fails to dismiss modal
-      playWryyyScream();
+      playWryyy();
     }
   };
 
   // Play WRRYYYY scream when DIO modal first appears
   useEffect(() => {
     if (showDioModal) {
-      playWryyyScream();
+      playWryyy();
     }
   }, [showDioModal]);
 

@@ -65,12 +65,12 @@ export function useDesperationMode() {
       const currentTime = Math.floor((Date.now() - startTime) / 1000);
       setTimeOnSite(currentTime);
       
-      // Determine desperation level
-      if (currentTime >= 90) {
+      // Determine desperation level - more chill progression
+      if (currentTime >= 120) { // 2 minutes for max desperation
         setLevel(4);
-      } else if (currentTime >= 60) {
+      } else if (currentTime >= 90) { // 1.5 minutes for level 3
         setLevel(3);
-      } else if (currentTime >= 30) {
+      } else if (currentTime >= 60) { // 1 minute for level 2
         setLevel(2);
       } else {
         setLevel(1);
@@ -80,10 +80,13 @@ export function useDesperationMode() {
     return () => clearInterval(timeInterval);
   }, []);
 
-  // Level 2: Screen pulsing and price changes (30-60 seconds)
+  // Level 2: Mild effects and price changes (60-90 seconds)
   useEffect(() => {
     if (level >= 2) {
-      setIsScreenPulsing(true);
+      // No screen pulsing at level 2, save that for level 3
+      if (level >= 3) {
+        setIsScreenPulsing(true);
+      }
       
       // Start price chaos
       const priceInterval = setInterval(() => {
@@ -148,7 +151,7 @@ export function useDesperationMode() {
           newViewers[id] = Math.floor(Math.random() * 12) + 3; // 3-15 viewers
         });
         setViewerCounts(newViewers);
-      }, 7000);
+      }, 5500);
 
       return () => {
         document.removeEventListener('mousemove', handleMouseMove);

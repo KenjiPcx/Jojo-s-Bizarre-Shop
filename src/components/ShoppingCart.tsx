@@ -2,19 +2,31 @@
 
 import { useState, useEffect } from 'react';
 import { useCart } from '@/hooks/useCart';
+import { useJojoAudio } from '@/hooks/useJojoAudio';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { ShoppingCart as CartIcon, Plus, Minus, Trash2 } from 'lucide-react';
-import { playMuda, playKonoDioDa } from '@/lib/audio';
-import { dioQuotes } from '@/data/products';
+import { CheckoutFlow } from './CheckoutFlow';
 
 export function ShoppingCart() {
   const { cart, updateQuantity, removeFromCart, clearCart, getItemCount } = useCart();
+  const { playMudaMudaMuda, playKonoDioDa, triggerRandomMemeSound } = useJojoAudio();
   const [isOpen, setIsOpen] = useState(false);
   const [dioMode, setDioMode] = useState(false);
   const [currentDioQuote, setCurrentDioQuote] = useState('');
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+
+  const dioQuotes = [
+    "You thought you could modify your cart, but it was me, DIO!",
+    "MUDA MUDA MUDA! Your cart changes are useless!",
+    "ZA WARUDO! Time has stopped for your shopping!",
+    "This must be the work of an enemy Stand user!",
+    "You fell for it, fool! Thunder Cross Split Attack!",
+    "Even Speedwagon is afraid of these prices!"
+  ];
 
   useEffect(() => {
     // Random chance for DIO to take over the cart
@@ -36,7 +48,7 @@ export function ShoppingCart() {
 
   const handleQuantityChange = (productId: string, newQuantity: number) => {
     if (dioMode) {
-      playMuda();
+      playMudaMudaMuda();
       return;
     }
     updateQuantity(productId, newQuantity);
@@ -44,7 +56,7 @@ export function ShoppingCart() {
 
   const handleRemoveItem = (productId: string) => {
     if (dioMode) {
-      playMuda();
+      playMudaMudaMuda();
       return;
     }
     removeFromCart(productId);
@@ -52,7 +64,7 @@ export function ShoppingCart() {
 
   const handleClearCart = () => {
     if (dioMode) {
-      playMuda();
+      playMudaMudaMuda();
       return;
     }
     clearCart();
@@ -175,12 +187,25 @@ export function ShoppingCart() {
 
               {/* Action Buttons */}
               <div className="space-y-2 pt-4">
-                <Button 
-                  className="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-black font-bold"
-                  disabled={dioMode}
-                >
-                  {dioMode ? 'MUDA MUDA MUDA!' : 'CHECKOUT (Coming Soon)'}
-                </Button>
+                <Dialog open={isCheckoutOpen} onOpenChange={setIsCheckoutOpen}>
+                  <DialogTrigger asChild>
+                    <Button 
+                      className="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-bold py-3 text-lg"
+                      disabled={dioMode}
+                      onClick={() => {
+                        if (!dioMode) {
+                          triggerRandomMemeSound();
+                          setIsOpen(false); // Close cart when opening checkout
+                        }
+                      }}
+                    >
+                      {dioMode ? 'MUDA MUDA MUDA!' : '🔥 CHECKOUT NOW! 🔥'}
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-7xl max-h-[90vh] overflow-y-auto bg-gradient-to-br from-black via-purple-900 to-black">
+                    <CheckoutFlow />
+                  </DialogContent>
+                </Dialog>
                 
                 <Button 
                   variant="outline" 

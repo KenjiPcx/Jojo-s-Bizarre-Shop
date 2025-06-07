@@ -21,7 +21,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "JoJo's Bizarre Bazaar - Menacing Merchandise",
+  title: "JoJo's Bizarre Shop - Menacing Merchandise",
   description: "The most bizarre ecommerce store in the multiverse! Featuring Stands, manga, figures, and artifacts from the JoJo universe. ゴゴゴゴ",
 };
 

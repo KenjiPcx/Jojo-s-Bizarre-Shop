@@ -11,6 +11,7 @@ export const products: Product[] = [
     category: 'artifact',
     rarity: 'godly',
     jojoReference: 'Used by Dio to become a vampire. The beginning of it all!',
+    character: 'dio',
     inStock: 1,
     menacingLevel: 5
   },
@@ -25,6 +26,7 @@ export const products: Product[] = [
     rarity: 'legendary',
     standPower: 'Awakens Stand abilities',
     jojoReference: 'The source of all Stand powers! Used throughout the series.',
+    character: 'requiem',
     inStock: 5,
     menacingLevel: 5
   },
@@ -39,6 +41,7 @@ export const products: Product[] = [
     rarity: 'rare',
     standPower: 'Time Stop (for 5 seconds)',
     jojoReference: 'Jotaro Kujo\'s incredibly powerful close-range Stand',
+    character: 'jotaro',
     inStock: 15,
     menacingLevel: 4
   },
@@ -53,6 +56,7 @@ export const products: Product[] = [
     rarity: 'legendary',
     standPower: 'Time Stop (unlimited)',
     jojoReference: 'DIO\'s terrifying Stand from Stardust Crusaders',
+    character: 'dio',
     inStock: 6,
     menacingLevel: 5
   },
@@ -78,11 +82,26 @@ export const products: Product[] = [
     category: 'cosplay',
     rarity: 'rare',
     jojoReference: 'Giorno\'s iconic golden accessories from Part 5',
+    character: 'giorno',
     inStock: 25,
     menacingLevel: 3
   },
   {
     id: '7',
+    name: 'Yoshikage Kira\'s Hand Collection',
+    price: 666.00,
+    originalPrice: 999.99,
+    description: 'My name is Yoshikage Kira... and this is my hand collection. Each hand comes with its own tragic backstory. WARNING: May cause obsessive behavior and a desire for a quiet life.',
+    image: '/products/kira-hands.jpg',
+    category: 'artifact',
+    rarity: 'legendary',
+    jojoReference: 'Kira\'s disturbing obsession with hands from Part 4',
+    character: 'kira',
+    inStock: 4,
+    menacingLevel: 5
+  },
+  {
+    id: '8',
     name: 'Jotaro\'s Hat (Fused with Hair)',
     price: 199.99,
     originalPrice: 249.99,
@@ -91,6 +110,7 @@ export const products: Product[] = [
     category: 'cosplay',
     rarity: 'rare',
     jojoReference: 'Jotaro\'s mysterious hat from Stardust Crusaders',
+    character: 'jotaro',
     inStock: 12,
     menacingLevel: 4
   },
@@ -104,6 +124,7 @@ export const products: Product[] = [
     rarity: 'legendary',
     standPower: 'Explosive Touch',
     jojoReference: 'Yoshikage Kira\'s deadly Stand from Diamond is Unbreakable',
+    character: 'kira',
     inStock: 8,
     menacingLevel: 5
   },

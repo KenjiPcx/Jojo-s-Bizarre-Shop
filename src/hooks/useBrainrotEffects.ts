@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { playKonoDioDa, playWryyy, playMenacing, playJojoSoundWithChaos, playRandomJojoCatchphrase, triggerAudioBrainrot } from '@/lib/audio';
+import { playKonoDioDa, playWryyy, playMenacing, playRandomJojoCatchphrase, triggerAudioBrainrot, playTimeStop, playOra, playMudaMudaMuda, playToBeContinued } from '@/lib/audio';
 import { dioQuotes, standEncounters } from '@/data/products';
 
 export function useBrainrotEffects() {
@@ -21,7 +21,7 @@ export function useBrainrotEffects() {
         // Enhanced audio sequence
         playKonoDioDa();
         setTimeout(() => {
-          playJojoSoundWithChaos('timestop');
+          playTimeStop();
         }, 1000);
         setTimeout(() => {
           playRandomJojoCatchphrase();
@@ -53,7 +53,7 @@ export function useBrainrotEffects() {
         // Audio sequence for price rejection
         playWryyy();
         setTimeout(() => {
-          playJojoSoundWithChaos('dramatic-stinger');
+          playTimeStop();
         }, 1000);
         setTimeout(() => {
           playRandomJojoCatchphrase();
@@ -61,7 +61,7 @@ export function useBrainrotEffects() {
         
         // Chaos mode for price changes
         setTimeout(() => {
-          playJojoSoundWithChaos('chaos-layer');
+          triggerAudioBrainrot();
         }, 3000);
         
         setTimeout(() => {
@@ -84,13 +84,13 @@ export function useBrainrotEffects() {
         // Epic stand battle audio sequence
         playMenacing();
         setTimeout(() => {
-          playJojoSoundWithChaos('dramatic-stinger');
+          playTimeStop();
         }, 1500);
         setTimeout(() => {
-          playJojoSoundWithChaos('ora');
+          playOra();
         }, 3000);
         setTimeout(() => {
-          playJojoSoundWithChaos('muda');
+          playMudaMudaMuda();
         }, 4000);
         setTimeout(() => {
           playRandomJojoCatchphrase();
@@ -107,7 +107,7 @@ export function useBrainrotEffects() {
           setStandBattle(false);
           setStandBattleEnemy('');
           // Victory sound
-          playJojoSoundWithChaos('to-be-continued');
+          playToBeContinued();
         }, 12000); // Extended for epic battle audio
       }
     }, 30000);

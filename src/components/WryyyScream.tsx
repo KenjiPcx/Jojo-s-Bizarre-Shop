@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { playJojoSound } from '@/lib/audio';
+import { playWryyy } from '@/lib/audio';
 
 export function WryyyScream() {
   const [isActive, setIsActive] = useState(false);
@@ -50,7 +50,7 @@ export function WryyyScream() {
     setIsActive(true);
     
     // Play WRYYY sound
-    playJojoSound('wryyy');
+    playWryyy();
     
     // Add screen shake to body
     document.body.style.animation = 'screenShake 0.5s ease-in-out';

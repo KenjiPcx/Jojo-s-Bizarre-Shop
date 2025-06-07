@@ -62,7 +62,7 @@ export function Navigation() {
                   ? 'text-black animate-pulse' 
                   : 'bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent'
               }`}>
-                JOJO'S BIZARRE BAZAAR
+                JOJO'S BIZARRE SHOP
               </h1>
               <p className={`text-sm ${
                 jojoMode ? 'text-gray-800' : 'text-purple-300'

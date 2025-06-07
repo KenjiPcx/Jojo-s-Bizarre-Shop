@@ -9,6 +9,7 @@ export interface Product {
   rarity: 'common' | 'rare' | 'legendary' | 'godly';
   standPower?: string;
   jojoReference: string;
+  character?: 'dio' | 'giorno' | 'jotaro' | 'joseph' | 'kira' | 'pillarmen' | 'requiem' | 'general';
   inStock: number;
   menacingLevel: 1 | 2 | 3 | 4 | 5;
 }

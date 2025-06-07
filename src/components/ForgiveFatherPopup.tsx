@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { playForgiveFatherDramatic } from '@/lib/audio';
+import { playMadeInHeaven } from '@/lib/audio';
 
 interface ForgiveFatherPopupProps {
   triggerCount?: number;
@@ -94,7 +94,7 @@ export function ForgiveFatherPopup({ triggerCount = 0 }: ForgiveFatherPopupProps
     setIsVisible(true);
     
     // Play dramatic audio
-    playForgiveFatherDramatic();
+    playMadeInHeaven();
     
     // Auto-hide after 5-6 seconds
     setTimeout(() => {

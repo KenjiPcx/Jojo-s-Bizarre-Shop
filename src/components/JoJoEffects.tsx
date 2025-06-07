@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { playJojoSound, playGiornoTheme, playMenacing, initializeAudio, startJoJoMemeAudioTimer } from '@/lib/audio';
+import { playMenacing, initializeAudio, playRandomJojoCatchphrase, playToBeContinued, stopAllAudio, setMasterVolume } from '@/lib/audio';
 import { dioQuotes, standEncounters } from '@/data/products';
 
 interface FloatingMenacingProps {
@@ -149,18 +149,14 @@ export function JoJoEffects() {
   const [showEncounter, setShowEncounter] = useState(false);
   const [toBeContinued, setToBeContinued] = useState(false);
   const audioInitialized = useRef(false);
-  const audioTimerCleanup = useRef<(() => void) | null>(null);
 
-  // Initialize audio on first user interaction and start timer
+  // Initialize audio on first user interaction
   useEffect(() => {
     const handleFirstInteraction = async () => {
       if (!audioInitialized.current) {
         await initializeAudio();
         audioInitialized.current = true;
-        
-        // Start the 60-second JoJo meme audio timer
-        audioTimerCleanup.current = startJoJoMemeAudioTimer();
-        console.log('🎵 JoJo meme audio timer started! Sounds will play every 60 seconds.');
+        console.log('🎵 JoJo audio system initialized!');
       }
     };
 
@@ -170,24 +166,18 @@ export function JoJoEffects() {
     return () => {
       document.removeEventListener('click', handleFirstInteraction);
       document.removeEventListener('keydown', handleFirstInteraction);
-      // Cleanup timer on unmount
-      if (audioTimerCleanup.current) {
-        audioTimerCleanup.current();
-      }
     };
   }, []);
 
-  // Timer for JoJo meme audio every 60 seconds
+  // Visual effects timer - no audio spam since main audio system handles that
   useEffect(() => {
     const interval = setInterval(() => {
-      const sounds = ['menacing', 'wryyy', 'ora', 'muda', 'yare'];
-      const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
-      playJojoSound(randomSound);
-      
-      // Show menacing effect
-      setShowMenacing(true);
-      setTimeout(() => setShowMenacing(false), 3000);
-    }, 60000); // Every 60 seconds
+      // Just show menacing effect periodically for visual flair
+      if (Math.random() < 0.5) {
+        setShowMenacing(true);
+        setTimeout(() => setShowMenacing(false), 3000);
+      }
+    }, 120000); // Every 2 minutes
 
     return () => clearInterval(interval);
   }, []);
@@ -214,7 +204,7 @@ export function JoJoEffects() {
         const encounter = standEncounters[Math.floor(Math.random() * standEncounters.length)];
         setStandEncounter(encounter);
         setShowEncounter(true);
-        playMenacing();
+        playRandomJojoCatchphrase();
         
         setTimeout(() => setShowEncounter(false), 5000);
       }
@@ -250,8 +240,8 @@ export function JoJoEffects() {
         setTimeout(() => setShowMenacing(false), 3500);
         
         // More frequent sound effects
-        if (Math.random() < 0.7) {
-          playJojoSound('menacing');
+        if (Math.random() < 0.3) {
+          playRandomJojoCatchphrase();
         }
         
         // Add screen shake for intense scrolling
@@ -286,13 +276,7 @@ export function JoJoEffects() {
       // Detect if mouse is moving towards the close button or address bar
       if (e.clientY <= 0 || e.clientX <= 0 || e.clientX >= window.innerWidth) {
         mouseLeaveTimeout = setTimeout(() => {
-          setToBeContinued(true);
-          playJojoSound('roundabout');
-          
-          // Show the effect for a brief moment then auto-hide
-          setTimeout(() => {
-            setToBeContinued(false);
-          }, 3000);
+          triggerToBeContinuedEffect();
         }, 500); // Small delay to avoid false positives
       }
     };
@@ -305,9 +289,7 @@ export function JoJoEffects() {
     };
 
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      setToBeContinued(true);
-      playJojoSound('roundabout');
-      
+      triggerToBeContinuedEffect();
       e.preventDefault();
       e.returnValue = '';
     };
@@ -326,6 +308,31 @@ export function JoJoEffects() {
       }
     };
   }, []);
+
+  // Proper To Be Continued effect with audio timing
+  const triggerToBeContinuedEffect = () => {
+    console.log('🎵 Triggering To Be Continued effect...');
+    
+    // Step 1: Quiet all other sounds and prepare for the meme
+    const originalVolume = 0.5; // Store current volume
+    setMasterVolume(0.2); // Lower all other audio
+    
+    // Step 2: Start playing the To Be Continued music
+    playToBeContinued();
+    
+    // Step 3: After 7 seconds (when the iconic part hits), show the visual effect
+    setTimeout(() => {
+      setToBeContinued(true);
+      console.log('📺 To Be Continued visual effect activated!');
+      
+      // Step 4: Show effect for 5 seconds then hide and restore audio
+      setTimeout(() => {
+        setToBeContinued(false);
+        setMasterVolume(originalVolume); // Restore original volume
+        console.log('🔊 Audio restored, effect complete');
+      }, 5000);
+    }, 5500); // Wait 7 seconds for the music buildup
+  };
 
   return (
     <>

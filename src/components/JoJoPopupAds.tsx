@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
-import { playKonoDioDa, playWryyy, playToBeContinued, playIlVentoDoro, playMudaMuda, playOraOra } from '@/lib/audio';
+import { playKonoDioDa, playWryyy, playToBeContinued, playMudaMudaMuda, playOra } from '@/lib/audio';
 
 interface PopupAd {
   id: string;
@@ -154,19 +154,19 @@ export function JoJoPopupAds() {
           if (randomAd.id === '7') { // To Be Continued ad
             playToBeContinued();
           } else if (randomAd.id === '8') { // Il Vento D'Oro ad
-            playIlVentoDoro();
+            playMudaMudaMuda();
           } else if (randomAd.id === '9') { // Stand Rush ad
             if (Math.random() < 0.5) {
-              playOraOra();
+              playOra();
             } else {
-              playMudaMuda();
+              playMudaMudaMuda();
             }
           } else if (randomAd.style === 'dio') {
             playKonoDioDa();
           } else if (randomAd.style === 'jotaro') {
-            playOraOra();
+            playOra();
           } else if (randomAd.style === 'giorno') {
-            playMudaMuda();
+            playMudaMudaMuda();
           } else {
             playWryyy();
           }
