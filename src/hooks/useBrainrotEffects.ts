@@ -76,7 +76,7 @@ export function useBrainrotEffects() {
   // Enhanced Random Stand battles with epic audio
   useEffect(() => {
     const interval = setInterval(() => {
-      if (Math.random() < 0.08) {
+      if (Math.random() < 0.20) {
         const enemy = standEncounters[Math.floor(Math.random() * standEncounters.length)];
         setStandBattleEnemy(enemy);
         setStandBattle(true);

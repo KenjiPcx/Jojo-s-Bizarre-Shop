@@ -560,7 +560,7 @@ export default function Home() {
                   addToCart(product);
                   
                   // Reduced chance for Za Warudo effect on cart add
-                  if (Math.random() < 0.15) { // 15% chance (was 25%)
+                  if (Math.random() < 0.25) { // 15% chance (was 25%)
                     setTimeout(() => triggerZaWarudoEffect(), 1000);
                   }
                 }}
